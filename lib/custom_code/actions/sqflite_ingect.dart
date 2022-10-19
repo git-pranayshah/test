@@ -25,8 +25,9 @@ class DatabaseHelper {
 
   void _onCreate(Database db, int version) async {
     // When creating the db, create the table
-    await db.execute(
-        'CREATE TABLE todos (id INTEGER PRIMARY KEY AUTOINCREMENT, item_name TEXT,date_created TEXT');
+    db.execute(
+      'CREATE TABLE dogs(id INTEGER PRIMARY KEY, name TEXT, age INTEGER)',
+    );
   }
 }
 
