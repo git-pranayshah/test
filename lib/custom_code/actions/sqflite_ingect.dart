@@ -18,6 +18,7 @@ class DatabaseHelper {
   initDb() async {
     io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "database_name.db");
+    print("Database created................................");
     Database _db = await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
@@ -31,11 +32,13 @@ class DatabaseHelper {
     db.execute(
       'CREATE TABLE dogs(id INTEGER PRIMARY KEY, name TEXT, age INTEGER)',
     );
+    print("Table created................................");
     db.insert(
       'dogs',
       fido.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+    print("Data Ingested created................................");
   }
 }
 
