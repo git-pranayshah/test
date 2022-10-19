@@ -12,59 +12,36 @@ import 'package:flutter_simple_dependency_injection/injector.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = new DatabaseHelper.internal();
-
   factory DatabaseHelper() => _instance;
-
   DatabaseHelper.internal();
-  final Database _db;
+
   initDb() async {
     io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "database_name.db");
-    _db = await openDatabase(path, version: 1, onCreate: _onCreate);
+    Database _db = await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
   void _onCreate(Database db, int version) async {
     // When creating the db, create the table
+    var fido = const Dog(
+      id: 0,
+      name: 'Fido',
+      age: 35,
+    );
     db.execute(
       'CREATE TABLE dogs(id INTEGER PRIMARY KEY, name TEXT, age INTEGER)',
     );
-  }
-
-  Future<void> insertDog(Dog dog) async {
-    // Get a reference to the database.
-
-    // Insert the Dog into the correct table. You might also specify the
-    // `conflictAlgorithm` to use in case the same dog is inserted twice.
-    //
-    // In this case, replace any previous data.
-    await _db.insert(
+    db.insert(
       'dogs',
-      dog.toMap(),
+      fido.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
-  Future<List<Dog>> dogs() async {
-    // Get a reference to the database.
-
-    // Query the table for all The Dogs.
-    final List<Map<String, dynamic>> maps = await _db.query('dogs');
-
-    // Convert the List<Map<String, dynamic> into a List<Dog>.
-    return List.generate(maps.length, (i) {
-      return Dog(
-        id: maps[i]['id'],
-        name: maps[i]['name'],
-        age: maps[i]['age'],
-      );
-    });
+  Future sqfliteIngect() async {
+    DatabaseHelper _databaseHelper = DatabaseHelper();
+    await _databaseHelper.initDb();
   }
-}
-
-Future sqfliteIngect() async {
-  DatabaseHelper _databaseHelper = DatabaseHelper();
-
-  await _databaseHelper.initDb();
 }
 
 class Dog {
