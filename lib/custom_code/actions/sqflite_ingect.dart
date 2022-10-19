@@ -20,11 +20,12 @@ class DatabaseHelper {
     String path = join(documentsDirectory.path, "database_name.db");
     print("Database created Initialized................................");
     Database _db = await openDatabase(path, version: 1, onCreate: _onCreate);
-    rint("Database created ................................");
+    print("Database created ................................");
   }
 
   void _onCreate(Database db, int version) async {
     // When creating the db, create the table
+
     var fido = const Dog(
       id: 0,
       name: 'Fido',
