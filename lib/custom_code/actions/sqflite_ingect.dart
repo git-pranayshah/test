@@ -37,11 +37,11 @@ class DatabaseHelper {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
+}
 
-  Future sqfliteIngect() async {
-    DatabaseHelper _databaseHelper = DatabaseHelper();
-    await _databaseHelper.initDb();
-  }
+Future sqfliteIngect() async {
+  DatabaseHelper _databaseHelper = DatabaseHelper();
+  await _databaseHelper.initDb();
 }
 
 class Dog {
