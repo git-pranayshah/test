@@ -25,17 +25,17 @@ class DatabaseHelper {
       name: 'Fido',
       age: 35,
     );
-    db.execute(
+    _db.execute(
       'CREATE TABLE dogs(id INTEGER PRIMARY KEY, name TEXT, age INTEGER)',
     );
     print("Table created................................");
-    db.insert(
+    _db.insert(
       'dogs',
       fido.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
     print("Data Ingested created................................");
-    final List<Map<String, dynamic>> maps = await db.query('dogs');
+    final List<Map<String, dynamic>> maps = await _db.query('dogs');
 
     // Convert the List<Map<String, dynamic> into a List<Dog>.
     List.generate(maps.length, (i) {
