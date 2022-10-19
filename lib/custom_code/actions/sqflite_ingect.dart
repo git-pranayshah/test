@@ -18,8 +18,9 @@ class DatabaseHelper {
   initDb() async {
     io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "database_name.db");
-    print("Database created................................");
+    print("Database created Initialized................................");
     Database _db = await openDatabase(path, version: 1, onCreate: _onCreate);
+    rint("Database created ................................");
   }
 
   void _onCreate(Database db, int version) async {
@@ -39,6 +40,14 @@ class DatabaseHelper {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
     print("Data Ingested created................................");
+    final List<Map<String, dynamic>> maps = await db.query('dogs');
+
+    // Convert the List<Map<String, dynamic> into a List<Dog>.
+    List.generate(maps.length, (i) {
+      print(maps[i]['id'].toString());
+      print(maps[i]['name'].toString());
+      print(maps[i]['age'].toString());
+    });
   }
 }
 
