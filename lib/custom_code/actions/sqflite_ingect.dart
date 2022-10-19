@@ -25,10 +25,6 @@ class DatabaseHelper {
       name: 'Fido',
       age: 35,
     );
-    _db.execute(
-      'CREATE TABLE dogs(id INTEGER PRIMARY KEY, name TEXT, age INTEGER)',
-    );
-    print("Table created................................");
     _db.insert(
       'dogs',
       fido.toMap(),
@@ -48,30 +44,10 @@ class DatabaseHelper {
 
   void _onCreate(Database db, int version) async {
     // When creating the db, create the table
-
-    var fido = const Dog(
-      id: 0,
-      name: 'Fido',
-      age: 35,
-    );
     db.execute(
       'CREATE TABLE dogs(id INTEGER PRIMARY KEY, name TEXT, age INTEGER)',
     );
     print("Table created................................");
-    db.insert(
-      'dogs',
-      fido.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-    print("Data Ingested created................................");
-    final List<Map<String, dynamic>> maps = await db.query('dogs');
-
-    // Convert the List<Map<String, dynamic> into a List<Dog>.
-    List.generate(maps.length, (i) {
-      print(maps[i]['id'].toString());
-      print(maps[i]['name'].toString());
-      print(maps[i]['age'].toString());
-    });
   }
 }
 
